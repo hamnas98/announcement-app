@@ -16,6 +16,9 @@
     "generate": "shopify app generate",
     "deploy": "shopify app deploy"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "trustedDependencies": ["@shopify/plugin-cloudflare"],
   "author": "Hamnas",
   "private": true
