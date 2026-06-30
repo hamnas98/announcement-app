@@ -1,0 +1,101 @@
+{% comment %}
+  extensions/theme-app-extension/blocks/announcement.liquid
+
+  App Embed Block — renders at body level on every storefront page.
+
+  DATA FLOW:
+  Express backend → metafieldsSet GraphQL mutation → Shopify stores metafield
+  → Liquid reads shop.metafields.my_app.announcement.value at render time
+  → Banner HTML sent to browser (no JS API call needed)
+
+  WHY .value:
+  shop.metafields.my_app.announcement returns a metafield OBJECT.
+  shop.metafields.my_app.announcement.value returns the STRING inside it.
+  Without .value you get the object representation, not the text.
+
+  WHY the blank check:
+  If no announcement has been saved yet, the metafield doesn't exist.
+  Accessing a nil metafield returns blank — the if check prevents
+  rendering an empty banner div on the page.
+{% endcomment %}
+
+{% comment %} Capture the value once — reuse without repeated lookups {% endcomment %}
+{% assign announcement_text = shop.metafields.my_app.announcement.value %}
+
+{% if announcement_text != blank %}
+
+  <div
+    id="announcement-banner"
+    class="announcement-banner"
+    style="
+      background-color: {{ block.settings.background_color }};
+      color: {{ block.settings.text_color }};
+      font-size: {{ block.settings.font_size }}px;
+      padding: {{ block.settings.padding }}px 20px;
+    "
+    {{ block.shopify_attributes }}
+  >
+
+    {%- if block.settings.show_close_button -%}
+      <button
+        class="announcement-banner__close"
+        aria-label="Close announcement"
+      >&#x2715;</button>
+    {%- endif -%}
+
+    <p class="announcement-banner__text">
+      {{ announcement_text }}
+    </p>
+
+  </div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Announcement Banner",
+  "target": "body",
+  "javascript": "announcement.js",
+  "stylesheet": "announcement.css",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_close_button",
+      "label": "Show close button",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

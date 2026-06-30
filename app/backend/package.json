@@ -1,0 +1,24 @@
+{
+  "name": "announcement-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Express backend for Shopify Announcement App",
+  "main": "server.js",
+ 
+  "scripts": {
+    "dev": "nodemon server.js",
+    "build": "echo 'No build step needed'"
+  },
+  "dependencies": {
+    "@shopify/shopify-api": "^13.1.0",
+    "@shopify/shopify-app-session-storage-mongodb": "^6.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "http-proxy-middleware": "^4.1.1",
+    "mongoose": "^8.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
