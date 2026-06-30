@@ -15,5 +15,5 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://localhost:3458/api/auth/callback"
+  "https://announcement-app-6qvm.onrender.com/api/auth/callback"
 ]
