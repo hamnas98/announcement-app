@@ -1,6 +1,6 @@
 client_id = "b08d9508e7d51f3210d149a15e3f3044"
 name = "announcement-app"
-application_url = "https://localhost:3458"
+application_url = "https://announcement-app-6qvm.onrender.com"
 embedded = true
 
 [build]
@@ -14,5 +14,5 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://localhost:3458/api/auth/callback"
+  "https://announcement-app-6qvm.onrender.com/api/auth/callback"
 ]
